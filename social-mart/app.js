@@ -23,7 +23,18 @@ export default function App() {
       await signInWithEmailAndPassword(auth, email, password);
       Alert.alert('Success', 'Logged in successfully');
     } catch (error) {
-      Alert.alert('Error', error.message);
+      const message = error instanceof Error ? error.message : 'An unexpected error occurred';
+      Alert.alert('Error', message);
+    }
+  };
+
+  const handleSignUp = async () => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      Alert.alert('Success', 'Account created successfully');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'An unexpected error occurred';
+      Alert.alert('Error', message);
     }
   };
 
@@ -45,6 +56,8 @@ export default function App() {
         secureTextEntry
       />
       <Button title="Login" onPress={handleLogin} />
+      <View style={styles.spacer} />
+      <Button title="Create Account" onPress={handleSignUp} />
     </View>
   );
 }
@@ -61,5 +74,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 10,
     marginBottom: 12,
+  },
+  spacer: {
+    height: 12,
   },
 });
